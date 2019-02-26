@@ -18,12 +18,12 @@
 
 package org.eclipse.jetty.http;
 
-import static java.lang.Integer.MIN_VALUE;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
+
+import static java.lang.Integer.MIN_VALUE;
 
 /* ------------------------------------------------------------ */
 /**
@@ -37,8 +37,8 @@ import java.util.function.Function;
  */
 public class QuotedQualityCSV extends QuotedCSV implements Iterable<String>
 {    
-    private final static Double ZERO=new Double(0.0);
-    private final static Double ONE=new Double(1.0);
+    private final static Double ZERO=Double.valueOf(0.0);
+    private final static Double ONE=Double.valueOf(1.0);
     
 
     /**
@@ -121,8 +121,8 @@ public class QuotedQualityCSV extends QuotedCSV implements Iterable<String>
             try
             {
                 q=(_keepQuotes && buffer.charAt(paramValue)=='"')
-                    ?new Double(buffer.substring(paramValue+1,buffer.length()-1))
-                    :new Double(buffer.substring(paramValue));
+                    ?Double.valueOf(buffer.substring(paramValue+1,buffer.length()-1))
+                    :Double.valueOf(buffer.substring(paramValue));
             }
             catch(Exception e)
             {

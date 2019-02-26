@@ -18,15 +18,6 @@
 
 package org.eclipse.jetty.util;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.lessThan;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.util.concurrent.CountDownLatch;
@@ -39,6 +30,15 @@ import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.sameInstance;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 public class SharedBlockingCallbackTest
 {
     private static final Logger LOG = Log.getLogger(SharedBlockingCallback.class);
@@ -46,12 +46,6 @@ public class SharedBlockingCallbackTest
     final AtomicInteger notComplete = new AtomicInteger();
     final SharedBlockingCallback sbcb= new SharedBlockingCallback()
     {
-        @Override
-        protected long getIdleTimeout()
-        {
-            return 150;
-        }
-
         @Override
         protected void notComplete(Blocker blocker)
         {

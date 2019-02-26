@@ -18,20 +18,11 @@
 
 package org.eclipse.jetty.nosql.mongodb;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 import java.net.UnknownHostException;
 import java.util.Map;
-
-import org.eclipse.jetty.server.session.SessionData;
-import org.eclipse.jetty.util.ClassLoadingObjectInputStream;
-import org.eclipse.jetty.util.log.Log;
-import org.eclipse.jetty.util.log.Logger;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -39,6 +30,14 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 import com.mongodb.WriteConcern;
+import org.eclipse.jetty.server.session.SessionData;
+import org.eclipse.jetty.util.ClassLoadingObjectInputStream;
+import org.eclipse.jetty.util.log.Log;
+import org.eclipse.jetty.util.log.Logger;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
@@ -201,7 +200,7 @@ public class MongoTestHelper
         boolean upsert = false;
         BasicDBObject sets = new BasicDBObject();
 
-        Object version = new Long(1);
+        Object version = Long.valueOf(1);
 
         // New session
 
@@ -250,7 +249,7 @@ public class MongoTestHelper
         boolean upsert = false;
         BasicDBObject sets = new BasicDBObject();
 
-        Object version = new Long(1);
+        Object version = Long.valueOf(1);
 
         // New session
         upsert = true;
@@ -297,7 +296,7 @@ public class MongoTestHelper
         boolean upsert = false;
         BasicDBObject sets = new BasicDBObject();
 
-        Object version = new Long(1);
+        Object version = Long.valueOf(1);
 
         // New session
         upsert = true;

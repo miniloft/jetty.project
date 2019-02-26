@@ -18,18 +18,6 @@
 
 package org.eclipse.jetty.http.client;
 
-import static org.eclipse.jetty.http.client.Transport.FCGI;
-import static org.eclipse.jetty.http.client.Transport.UNIX_SOCKET;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.nio.ByteBuffer;
@@ -39,7 +27,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-
 import javax.servlet.AsyncContext;
 import javax.servlet.ReadListener;
 import javax.servlet.ServletException;
@@ -68,6 +55,18 @@ import org.eclipse.jetty.util.log.StacklessLogging;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+
+import static org.eclipse.jetty.http.client.Transport.FCGI;
+import static org.eclipse.jetty.http.client.Transport.UNIX_SOCKET;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ServerTimeoutsTest extends AbstractTest<TransportScenario>
 {
@@ -205,7 +204,6 @@ public class ServerTimeoutsTest extends AbstractTest<TransportScenario>
     public void testNoBlockingTimeoutBlockingReadIdleTimeoutFires(Transport transport) throws Exception
     {
         init(transport);
-        scenario.httpConfig.setBlockingTimeout(-1);
         CountDownLatch handlerLatch = new CountDownLatch(1);
         scenario.start(new BlockingReadHandler(handlerLatch));
         long idleTimeout = 2500;
@@ -237,7 +235,6 @@ public class ServerTimeoutsTest extends AbstractTest<TransportScenario>
     {
         init(transport);
         long blockingTimeout = 2500;
-        scenario.httpConfig.setBlockingTimeout(blockingTimeout);
         CountDownLatch handlerLatch = new CountDownLatch(1);
         scenario.start(new BlockingReadHandler(handlerLatch));
         long idleTimeout = 3 * blockingTimeout;
@@ -270,7 +267,6 @@ public class ServerTimeoutsTest extends AbstractTest<TransportScenario>
         init(transport);
         long idleTimeout = 2500;
         long blockingTimeout = 3 * idleTimeout;
-        scenario.httpConfig.setBlockingTimeout(blockingTimeout);
         CountDownLatch handlerLatch = new CountDownLatch(1);
         scenario.start(new BlockingReadHandler(handlerLatch));
         scenario.setServerIdleTimeout(idleTimeout);
@@ -300,7 +296,6 @@ public class ServerTimeoutsTest extends AbstractTest<TransportScenario>
     public void testNoBlockingTimeoutBlockingWriteIdleTimeoutFires(Transport transport) throws Exception
     {
         init(transport);
-        scenario.httpConfig.setBlockingTimeout(-1);
         CountDownLatch handlerLatch = new CountDownLatch(1);
         scenario.start(new BlockingWriteHandler(handlerLatch));
         long idleTimeout = 2500;
@@ -342,7 +337,6 @@ public class ServerTimeoutsTest extends AbstractTest<TransportScenario>
     {
         init(transport);
         long blockingTimeout = 2500;
-        scenario.httpConfig.setBlockingTimeout(blockingTimeout);
         CountDownLatch handlerLatch = new CountDownLatch(1);
         scenario.start(new BlockingWriteHandler(handlerLatch));
         long idleTimeout = 3 * blockingTimeout;
@@ -385,7 +379,6 @@ public class ServerTimeoutsTest extends AbstractTest<TransportScenario>
         init(transport);
         long idleTimeout = 2500;
         long blockingTimeout = 3 * idleTimeout;
-        scenario.httpConfig.setBlockingTimeout(blockingTimeout);
         CountDownLatch handlerLatch = new CountDownLatch(1);
         scenario.start(new BlockingWriteHandler(handlerLatch));
         scenario.setServerIdleTimeout(idleTimeout);
@@ -427,7 +420,6 @@ public class ServerTimeoutsTest extends AbstractTest<TransportScenario>
         init(transport);
         long idleTimeout = 2500;
         long blockingTimeout = 2 * idleTimeout;
-        scenario.httpConfig.setBlockingTimeout(blockingTimeout);
         CountDownLatch handlerLatch = new CountDownLatch(1);
         scenario.start(new AbstractHandler.ErrorDispatchHandler()
         {

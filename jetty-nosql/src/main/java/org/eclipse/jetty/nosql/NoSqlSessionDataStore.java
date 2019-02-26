@@ -43,7 +43,7 @@ public abstract class NoSqlSessionDataStore extends AbstractSessionDataStore
         public NoSqlSessionData(String id, String cpath, String vhost, long created, long accessed, long lastAccessed, long maxInactiveMs)
         {
             super(id, cpath, vhost, created, accessed, lastAccessed, maxInactiveMs);
-            setVersion (new Long(0));
+            setVersion (Long.valueOf(0));
         }
         
         public void setVersion (Object v)

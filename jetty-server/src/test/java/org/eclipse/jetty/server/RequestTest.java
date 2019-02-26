@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import javax.servlet.DispatcherType;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
@@ -48,7 +47,6 @@ import javax.servlet.http.Part;
 import org.eclipse.jetty.http.BadMessageException;
 import org.eclipse.jetty.http.HttpCompliance;
 import org.eclipse.jetty.http.MimeTypes;
-import org.eclipse.jetty.http.MultiPartFormDataCompliance;
 import org.eclipse.jetty.http.tools.HttpTester;
 import org.eclipse.jetty.server.LocalConnector.LocalEndPoint;
 import org.eclipse.jetty.server.handler.AbstractHandler;
@@ -439,7 +437,6 @@ public class RequestTest
         });
         _server.stop();
         _server.setHandler(contextHandler);
-        _connector.getBean(HttpConnectionFactory.class).getHttpConfiguration().setMultiPartFormDataCompliance(MultiPartFormDataCompliance.LEGACY);
         _server.start();
 
         String multipart =  "      --AaB03x\r"+
@@ -485,7 +482,6 @@ public class RequestTest
      
         _server.stop();
         _server.setHandler(contextHandler);
-        _connector.getBean(HttpConnectionFactory.class).getHttpConfiguration().setMultiPartFormDataCompliance(MultiPartFormDataCompliance.RFC7578);
         _server.start();
 
         String multipart =  "      --AaB03x\r"+

@@ -18,16 +18,9 @@
 
 package org.eclipse.jetty.websocket.javax.common.decoders;
 
-import org.eclipse.jetty.websocket.javax.common.InitException;
-import org.eclipse.jetty.websocket.javax.common.InvalidWebSocketException;
-import org.eclipse.jetty.websocket.javax.common.util.InvalidSignatureException;
-import org.eclipse.jetty.websocket.javax.common.util.ReflectUtils;
-
-import javax.websocket.DecodeException;
-import javax.websocket.Decoder;
-import javax.websocket.EndpointConfig;
 import java.io.InputStream;
 import java.io.Reader;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.ByteBuffer;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -35,6 +28,14 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import javax.websocket.DecodeException;
+import javax.websocket.Decoder;
+import javax.websocket.EndpointConfig;
+
+import org.eclipse.jetty.websocket.javax.common.InitException;
+import org.eclipse.jetty.websocket.javax.common.InvalidWebSocketException;
+import org.eclipse.jetty.websocket.javax.common.util.InvalidSignatureException;
+import org.eclipse.jetty.websocket.javax.common.util.ReflectUtils;
 
 public class AvailableDecoders implements Iterable<AvailableDecoders.RegisteredDecoder>
 {
@@ -275,11 +276,11 @@ public class AvailableDecoders implements Iterable<AvailableDecoders.RegisteredD
 
         try
         {
-            registeredDecoder.instance = registeredDecoder.decoder.newInstance();
+            registeredDecoder.instance = registeredDecoder.decoder.getConstructor().newInstance();
             registeredDecoder.instance.init(this.config);
             return (T)registeredDecoder.instance;
         }
-        catch (InstantiationException | IllegalAccessException e)
+        catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e)
         {
             throw new InitException("Unable to init Decoder for type:" + registeredDecoder.decoder.getName(), e);
         }
@@ -313,7 +314,7 @@ public class AvailableDecoders implements Iterable<AvailableDecoders.RegisteredD
             // Per JSR356 spec, just the java primitives
             if (Boolean.class.isAssignableFrom(type))
             {
-                return new Boolean(value);
+                return Boolean.valueOf(value);
             }
             if (Boolean.TYPE.isAssignableFrom(type))
             {
@@ -321,7 +322,7 @@ public class AvailableDecoders implements Iterable<AvailableDecoders.RegisteredD
             }
             if (Byte.class.isAssignableFrom(type))
             {
-                return new Byte(value);
+                return Byte.valueOf(value);
             }
             if (Byte.TYPE.isAssignableFrom(type))
             {
@@ -331,7 +332,7 @@ public class AvailableDecoders implements Iterable<AvailableDecoders.RegisteredD
             {
                 if (value.length() != 1)
                     throw new DecodeException(value, "Invalid Size: Cannot decode as type " + Character.class.getName());
-                return new Character(value.charAt(0));
+                return Character.valueOf(value.charAt(0));
             }
             if (Character.TYPE.isAssignableFrom(type))
             {
@@ -341,7 +342,7 @@ public class AvailableDecoders implements Iterable<AvailableDecoders.RegisteredD
             }
             if (Double.class.isAssignableFrom(type))
             {
-                return new Double(value);
+                return Double.valueOf(value);
             }
             if (Double.TYPE.isAssignableFrom(type))
             {
@@ -349,7 +350,7 @@ public class AvailableDecoders implements Iterable<AvailableDecoders.RegisteredD
             }
             if (Float.class.isAssignableFrom(type))
             {
-                return new Float(value);
+                return Float.valueOf(value);
             }
             if (Float.TYPE.isAssignableFrom(type))
             {
@@ -357,7 +358,7 @@ public class AvailableDecoders implements Iterable<AvailableDecoders.RegisteredD
             }
             if (Integer.class.isAssignableFrom(type))
             {
-                return new Integer(value);
+                return Integer.valueOf(value);
             }
             if (Integer.TYPE.isAssignableFrom(type))
             {
@@ -365,7 +366,7 @@ public class AvailableDecoders implements Iterable<AvailableDecoders.RegisteredD
             }
             if (Long.class.isAssignableFrom(type))
             {
-                return new Long(value);
+                return Long.valueOf(value);
             }
             if (Long.TYPE.isAssignableFrom(type))
             {

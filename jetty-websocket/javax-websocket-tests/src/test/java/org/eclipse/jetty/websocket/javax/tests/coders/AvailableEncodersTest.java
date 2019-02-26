@@ -18,17 +18,6 @@
 
 package org.eclipse.jetty.websocket.javax.tests.coders;
 
-import org.eclipse.jetty.toolchain.test.Hex;
-import org.eclipse.jetty.websocket.javax.common.InvalidWebSocketException;
-import org.eclipse.jetty.websocket.javax.client.EmptyClientEndpointConfig;
-import org.eclipse.jetty.websocket.javax.common.encoders.AvailableEncoders;
-import org.eclipse.jetty.websocket.javax.common.encoders.IntegerEncoder;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import javax.websocket.EncodeException;
-import javax.websocket.Encoder;
-import javax.websocket.EndpointConfig;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -36,6 +25,17 @@ import java.nio.ByteBuffer;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+import javax.websocket.EncodeException;
+import javax.websocket.Encoder;
+import javax.websocket.EndpointConfig;
+
+import org.eclipse.jetty.toolchain.test.Hex;
+import org.eclipse.jetty.websocket.javax.client.EmptyClientEndpointConfig;
+import org.eclipse.jetty.websocket.javax.common.InvalidWebSocketException;
+import org.eclipse.jetty.websocket.javax.common.encoders.AvailableEncoders;
+import org.eclipse.jetty.websocket.javax.common.encoders.IntegerEncoder;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -113,7 +113,7 @@ public class AvailableEncodersTest
     @Test
     public void testCoreEncoder_Byte() throws IllegalAccessException, InstantiationException, EncodeException
     {
-        assertTextEncoder(Byte.class, new Byte((byte)0x21), "33");
+        assertTextEncoder(Byte.class, Byte.valueOf((byte)0x21), "33");
     }
 
     @Test
@@ -125,7 +125,7 @@ public class AvailableEncodersTest
     @Test
     public void testCoreEncoder_Character() throws IllegalAccessException, InstantiationException, EncodeException
     {
-        assertTextEncoder(Character.class, new Character('!'), "!");
+        assertTextEncoder(Character.class, Character.valueOf('!'), "!");
     }
 
     @Test
@@ -137,7 +137,7 @@ public class AvailableEncodersTest
     @Test
     public void testCoreEncoder_Double() throws IllegalAccessException, InstantiationException, EncodeException
     {
-        assertTextEncoder(Double.class, new Double(123.45), "123.45");
+        assertTextEncoder(Double.class, Double.valueOf(123.45), "123.45");
     }
 
     @Test
@@ -150,7 +150,7 @@ public class AvailableEncodersTest
     @Test
     public void testCoreEncoder_Float() throws IllegalAccessException, InstantiationException, EncodeException
     {
-        assertTextEncoder(Float.class, new Float(123.4567), "123.4567");
+        assertTextEncoder(Float.class, Float.valueOf(123.4567f), "123.4567");
     }
 
     @Test
@@ -163,7 +163,7 @@ public class AvailableEncodersTest
     @Test
     public void testCoreEncoder_Integer() throws IllegalAccessException, InstantiationException, EncodeException
     {
-        assertTextEncoder(Integer.class, new Integer(123), "123");
+        assertTextEncoder(Integer.class, Integer.valueOf(123), "123");
     }
 
     @Test
@@ -175,7 +175,7 @@ public class AvailableEncodersTest
     @Test
     public void testCoreEncoder_Long() throws IllegalAccessException, InstantiationException, EncodeException
     {
-        assertTextEncoder(Long.class, new Long(123_456_789), "123456789");
+        assertTextEncoder(Long.class, Long.valueOf(123_456_789), "123456789");
     }
 
     @Test

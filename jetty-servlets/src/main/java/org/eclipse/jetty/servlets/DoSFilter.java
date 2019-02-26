@@ -31,7 +31,6 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
@@ -626,25 +625,6 @@ public class DoSFilter implements Filter
     protected boolean checkWhitelist(String candidate)
     {
         for (String address : _whitelist)
-        {
-            if (address.contains("/"))
-            {
-                if (subnetMatch(address, candidate))
-                    return true;
-            }
-            else
-            {
-                if (address.equals(candidate))
-                    return true;
-            }
-        }
-        return false;
-    }
-
-    @Deprecated
-    protected boolean checkWhitelist(List<String> whitelist, String candidate)
-    {
-        for (String address : whitelist)
         {
             if (address.contains("/"))
             {

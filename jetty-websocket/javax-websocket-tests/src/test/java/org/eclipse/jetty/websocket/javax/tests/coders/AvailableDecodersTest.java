@@ -18,6 +18,15 @@
 
 package org.eclipse.jetty.websocket.javax.tests.coders;
 
+import java.nio.ByteBuffer;
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+import javax.websocket.DecodeException;
+import javax.websocket.Decoder;
+import javax.websocket.EndpointConfig;
+
 import org.eclipse.jetty.toolchain.test.Hex;
 import org.eclipse.jetty.websocket.javax.common.BasicEndpointConfig;
 import org.eclipse.jetty.websocket.javax.common.InvalidWebSocketException;
@@ -25,15 +34,6 @@ import org.eclipse.jetty.websocket.javax.common.decoders.AvailableDecoders;
 import org.eclipse.jetty.websocket.javax.common.decoders.IntegerDecoder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import javax.websocket.DecodeException;
-import javax.websocket.Decoder;
-import javax.websocket.EndpointConfig;
-import java.nio.ByteBuffer;
-import java.time.Instant;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -88,7 +88,7 @@ public class AvailableDecodersTest
     @Test
     public void testCoreDecode_Byte() throws IllegalAccessException, InstantiationException, DecodeException
     {
-        Byte expected = new Byte((byte)0x21);
+        Byte expected = Byte.valueOf((byte)0x21);
         assertTextDecoder(Byte.class, "33", expected);
     }
 
@@ -102,7 +102,7 @@ public class AvailableDecodersTest
     @Test
     public void testCoreDecode_Character() throws IllegalAccessException, InstantiationException, DecodeException
     {
-        Character expected = new Character('!');
+        Character expected = Character.valueOf('!');
         assertTextDecoder(Character.class, "!", expected);
     }
 
@@ -116,7 +116,7 @@ public class AvailableDecodersTest
     @Test
     public void testCoreDecode_Double() throws IllegalAccessException, InstantiationException, DecodeException
     {
-        Double expected = new Double(123.45);
+        Double expected = Double.valueOf(123.45);
         assertTextDecoder(Double.class, "123.45", expected);
     }
 
@@ -130,7 +130,7 @@ public class AvailableDecodersTest
     @Test
     public void testCoreDecode_Float() throws IllegalAccessException, InstantiationException, DecodeException
     {
-        Float expected = new Float(123.4567);
+        Float expected = Float.valueOf(123.4567f);
         assertTextDecoder(Float.class, "123.4567", expected);
     }
 
@@ -144,7 +144,7 @@ public class AvailableDecodersTest
     @Test
     public void testCoreDecode_Integer() throws IllegalAccessException, InstantiationException, DecodeException
     {
-        Integer expected = new Integer(1234);
+        Integer expected = Integer.valueOf(1234);
         assertTextDecoder(Integer.class, "1234", expected);
     }
 
@@ -158,7 +158,7 @@ public class AvailableDecodersTest
     @Test
     public void testCoreDecode_Long() throws IllegalAccessException, InstantiationException, DecodeException
     {
-        Long expected = new Long(123_456_789);
+        Long expected = Long.valueOf(123_456_789);
         assertTextDecoder(Long.class, "123456789", expected);
     }
 
